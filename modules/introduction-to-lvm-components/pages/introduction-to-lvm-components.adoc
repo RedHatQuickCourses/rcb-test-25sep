@@ -1,0 +1,8 @@
+#  Introduction to LVM Components
+
+== Introduction to LVM Components
+
+Logical Volume Management (LVM) in RHEL provides a flexible approach to storage management by abstracting physical hardware into manageable logical units.
+
+*   **Physical Volumes (PVs):** These are the underlying storage devices, such as raw disks or disk partitions, that have been initialized for use by LVM.
+*   **Volume Groups (VGs):** A Volume Group acts as a storage pool created by combining one or more Physical Volumes. It serves as a container from which logical volumes can be allocated.

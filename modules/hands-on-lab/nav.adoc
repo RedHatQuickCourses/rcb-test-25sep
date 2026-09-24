@@ -1,0 +1,3 @@
+* xref:hands-on-lab.adoc[]
+** xref:provisioning-and-formatting-block-devices.adoc[]
+** xref:automating-storage-configuration-using-ansible-roles.adoc[]

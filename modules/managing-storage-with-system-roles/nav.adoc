@@ -1,0 +1,3 @@
+* xref:managing-storage-with-system-roles.adoc[]
+** xref:overview-of-rhel_system_rolesstorage.adoc[]
+** xref:configuring-storage-pools-and-volumes.adoc[]

@@ -1,22 +1,25 @@
-= An Example Quick Course
+=  LVM on RHEL
 :navtitle: Home
 
 == Introduction
 
-Course Title: Course title FIXME
+Course Title:  LVM on RHEL
 
 Description:
 Course description FIXME
 
-Duration: pass:[<span class="course-total-duration" aria-live="polite">…</span>]
+Duration: FIXME hours
 
-== Objectives
+== Topics covered in this course
 
-On completing this course, you should be able to:
 
-* Observable, measurable objective...
-* Observable, measurable objective...
-* Observable, measurable objective...
+*  Introduction to LVM Components
+
+*  Managing Storage with System Roles
+
+*  Hands-on Lab
+
+
 
 == Prerequisites
 

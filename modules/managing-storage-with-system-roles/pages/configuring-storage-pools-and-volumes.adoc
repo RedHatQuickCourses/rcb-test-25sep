@@ -1,0 +1,60 @@
+#  Configuring storage pools and volumes
+
+= Configuring Storage Pools and Volumes
+
+The `rhel_system_roles.storage` role provides a declarative approach to managing LVM storage. Instead of executing manual `pvcreate`, `vgcreate`, and `lvcreate` commands, you define the desired state in an Ansible variable, allowing the system to handle the underlying LVM complexities.
+
+== Defining Storage Pools
+A **storage pool** acts as the abstraction layer for your physical storage. In the context of `rhel_system_roles.storage`, a pool is essentially a Volume Group (VG) backed by one or more Physical Volumes (PVs).
+
+When you define a pool:
+1. **Disks:** You specify the block devices (e.g., `sdb`, `sdc`) that contribute to the pool. The role automatically initializes these as Physical Volumes.
+2. **Management:** The role ensures that the Volume Group is created and that the specified disks are included, enabling pooled storage capacity for your logical volumes.
+
+== Defining Logical Volumes
+Once a pool is established, you define individual **volumes** within that pool. For each volume, you must specify:
+* **Size:** The capacity required (e.g., `"128 GiB"`).
+* **Mount Point:** The directory where the volume will be accessible.
+* **File System Type:** The format (e.g., `xfs` or `ext4`).
+* **State:** Typically set to `present` to ensure the volume exists.
+
+[IMPORTANT]
+====
+When using the `rhel_system_roles.storage` role for initial system builds, consider setting `storage_safe_mode: false`. This allows the role to overwrite existing configurations, which is often necessary during fresh provisioning but should be used with extreme caution on systems containing production data.
+====
+
+== Example Configuration
+The following YAML structure demonstrates how to group multiple disks into a single pool named `sap` and carve out specific volumes for SAP HANA requirements:
+
+[source,yaml]
+----
+storage_pools:
+  - name: sap
+    disks:
+      - sdb
+      - sdc
+      - sdd
+      - sde
+      - sdf
+    volumes:
+      - name: data
+        size: "128 GiB"
+        mount_point: "/hana/data"
+        fs_type: xfs
+        state: present
+      - name: log
+        size: "64 GiB"
+        mount_point: "/hana/log"
+        fs_type: xfs
+        state: present
+      - name: shared
+        size: "128 GiB"
+        mount_point: "/hana/shared"
+        fs_type: xfs
+        state: present
+----
+
+== Implementation Considerations
+* **Sizing:** Always refer to your application's sizing guide (such as SAP HANA requirements) before defining volumes. For instance, `/hana/log` is typically calculated based on a percentage of system RAM.
+* **Automation:** By utilizing this role in an Ansible Playbook, you ensure that storage configuration is idempotent and reproducible across your infrastructure.
+* **High Availability:** If your storage configuration involves shared storage for clustering, ensure that the underlying infrastructure is properly configured to prevent "Single Points of Failure," as defined in RHEL High Availability best practices.

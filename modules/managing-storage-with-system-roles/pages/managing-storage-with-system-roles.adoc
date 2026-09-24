@@ -1,0 +1,12 @@
+#  Managing Storage with System Roles
+
+= Managing Storage with System Roles
+
+The `rhel_system_roles.storage` role automates the complex configuration of storage devices on RHEL, ensuring consistency across environments. It simplifies the deployment of logical volumes and file systems by abstracting the underlying storage management tasks.
+
+Key features include:
+
+*   **Declarative Configuration**: Defines `storage_pools` and `volumes` in YAML, specifying disks, sizes, mount points, and file system types (e.g., XFS).
+*   **Automation**: Streamlines the provisioning and formatting of block devices, significantly reducing manual effort and human error.
+*   **SAP Readiness**: Provides a standardized method to meet specific SAP HANA storage requirements for data, log, and shared directories.
+*   **Safety Options**: Supports variables like `storage_safe_mode` to manage whether existing storage configurations should be preserved or overwritten during deployment.

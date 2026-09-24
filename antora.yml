@@ -1,10 +1,14 @@
-name: REPLACEREPONAME
-title: FIXME Course Title
-version: 1
+name: rcb-test-25sep
+title:  LVM on RHEL
+version: 1.0.0
 nav:
 - modules/ROOT/nav.adoc
 - modules/LABENV/nav.adoc
-- modules/chapter1/nav.adoc
-- modules/chapter2/nav.adoc
-- modules/chapter3/nav.adoc
+
+- modules/introduction-to-lvm-components/nav.adoc
+
+- modules/managing-storage-with-system-roles/nav.adoc
+
+- modules/hands-on-lab/nav.adoc
+
 - modules/appendix/nav.adoc

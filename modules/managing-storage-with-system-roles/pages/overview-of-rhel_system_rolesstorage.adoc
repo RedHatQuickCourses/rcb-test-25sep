@@ -1,0 +1,63 @@
+#  Overview of rhel_system_roles.storage
+
+= Overview of rhel_system_roles.storage
+
+The `rhel_system_roles.storage` role is a powerful automation tool designed to abstract the complexities of storage management on Red Hat Enterprise Linux (RHEL). By leveraging Ansible, this role allows system administrators to define complex storage configurations—such as Logical Volume Management (LVM)—as code, ensuring consistency across deployments and reducing the potential for human error.
+
+== Purpose and Functionality
+
+In traditional environments, configuring storage often requires executing a sequence of manual commands to initialize physical disks, create volume groups, define logical volumes, and manage file systems. The `rhel_system_roles.storage` role automates this lifecycle by allowing you to define the desired end-state in a YAML-formatted variable file.
+
+The role handles the following operations:
+*   **Initialization:** Preparing raw block devices as Physical Volumes (PVs).
+*   **Abstraction:** Grouping PVs into Volume Groups (VGs).
+*   **Allocation:** Carving out Logical Volumes (LVs) with specific size requirements.
+*   **Lifecycle:** Formatting these volumes with desired file systems (e.g., XFS) and configuring mount points.
+
+== Use Case: SAP HANA Deployments
+
+The `rhel_system_roles.storage` role is particularly effective for meeting strict, standardized storage requirements, such as those demanded by SAP HANA. SAP HANA environments require specific sizing for data, logs, and shared volumes based on the system's RAM capacity.
+
+Using this role, you can enforce these standards globally. Instead of manually carving out disks for every new SAP node, you define a single configuration block that ensures every server adheres to your organization's storage policy.
+
+=== Example Configuration
+
+Below is an example of how the role is configured to provision storage pools and volumes for an SAP HANA environment:
+
+[source,yaml]
+----
+storage_pools:
+  - name: sap
+    disks:
+      - sdb
+      - sdc
+      - sdd
+      - sde
+      - sdf
+    volumes:
+      - name: data
+        size: "128 GiB"
+        mount_point: "/hana/data"
+        fs_type: xfs
+        state: present
+      - name: log
+        size: "64 GiB"
+        mount_point: "/hana/log"
+        fs_type: xfs
+        state: present
+      - name: shared
+        size: "128 GiB"
+        mount_point: "/hana/shared"
+        fs_type: xfs
+        state: present
+      - name: sap
+        size: "50 GiB"
+        mount_point: "/usr/sap"
+        state: present
+----
+
+== Key Configuration Considerations
+
+*   **`storage_safe_mode`:** By default, the role provides safety checks to prevent data loss. For fresh installations where you intend to overwrite existing disk configurations, you can set `storage_safe_mode: false`. *Caution:* Use this setting carefully, as it will clear existing storage configurations on the specified devices.
+*   **Declarative Nature:** Because this role is declarative, you only need to define the "what." The role logic determines the "how," calculating the necessary LVM metadata updates and file system creation commands automatically.
+*   **Scalability:** Whether managing a single workstation or a large cluster of SAP HANA nodes, this role ensures that the storage architecture remains identical across the entire infrastructure, simplifying troubleshooting and long-term maintenance.

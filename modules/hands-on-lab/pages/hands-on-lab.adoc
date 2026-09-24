@@ -1,0 +1,9 @@
+#  Hands-on Lab
+
+= Hands-on Lab
+
+The hands-on labs provide a practical environment to apply your knowledge of LVM and storage management. Key activities include:
+
+* **Provisioning:** Creating and formatting block devices to prepare them for data storage.
+* **Automation:** Implementing `rhel_system_roles.storage` to configure storage pools and volumes using Ansible roles.
+* **Environment Management:** Utilizing the `lab` command-line utility to `start`, `grade`, and `finish` exercises, ensuring a clean and consistent state for each task.

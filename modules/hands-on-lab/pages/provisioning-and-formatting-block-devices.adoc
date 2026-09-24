@@ -1,0 +1,76 @@
+#  Provisioning and formatting block devices
+
+= Provisioning and Formatting Block Devices
+
+In Red Hat Enterprise Linux (RHEL), block device management is the foundation of system storage. Before a raw disk—such as a virtual `vdb` or an unpartitioned physical drive—can be used to store data, it must be properly initialized and prepared for a filesystem.
+
+== Understanding Block Device Preparation
+Provisioning a new block device typically follows a standard sequence:
+
+1.  **Identification:** Locating the raw device (e.g., `/dev/vdb`) using tools like `lsblk`.
+2.  **Partitioning (Optional):** Creating partitions if specific sub-divisions of the disk are required.
+3.  **Formatting (Creation of Filesystem):** Placing a filesystem structure (such as XFS or ext4) onto the block device or partition so the OS can organize files.
+4.  **Mounting:** Attaching the formatted device to the directory tree.
+
+[IMPORTANT]
+====
+Before performing any operations on a disk, always verify the device name using `lsblk` to avoid data loss on existing system drives.
+====
+
+== Hands-on Lab: Provisioning and Formatting
+
+In this exercise, we will take a raw 50GB disk (`/dev/vdb`) and prepare it for use.
+
+### Step 1: Identify the Disk
+First, verify the presence of the unformatted disk. As seen in the system context, your environment may show a raw device without a mount point:
+
+[source,bash]
+----
+[student@localhost ~]$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+vda    252:0    0   200G  0 disk 
+├─vda1 252:1    0     1M  0 part 
+├─vda2 252:2    0   100M  0 part /boot/efi
+└─vda3 252:3    0 199,9G  0 part /
+vdb    252:16   0    50G  0 disk
+----
+
+### Step 2: Create a Filesystem
+For most modern RHEL deployments, XFS is the recommended filesystem due to its performance and scalability. We can format the raw block device directly without creating a partition table if the entire disk will be used as a single volume.
+
+Run the following command to format `/dev/vdb` with the XFS filesystem:
+
+[source,bash]
+----
+[root@localhost ~]# mkfs.xfs /dev/vdb
+----
+
+### Step 3: Verify the New Filesystem
+Once the formatting process completes, verify that the device is ready by checking the file system type:
+
+[source,bash]
+----
+[root@localhost ~]# blkid /dev/vdb
+/dev/vdb: UUID="a1b2c3d4-e5f6-7890-abcd-1234567890ab" BLOCK_SIZE="4096" TYPE="xfs"
+----
+
+### Step 4: Mount the Device
+To use the storage, create a mount point and attach the device:
+
+[source,bash]
+----
+[root@localhost ~]# mkdir -p /mnt/data
+[root@localhost ~]# mount /dev/vdb /mnt/data
+[root@localhost ~]# df -h /mnt/data
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vdb         50G  400M   50G   1% /mnt/data
+----
+
+== Troubleshooting Guidance
+*   **Device Busy:** If you cannot format a device, ensure no processes are accessing it and that it is not currently mounted (`umount /dev/vdb`).
+*   **Persistent Mounts:** The `mount` command is temporary. To ensure the disk mounts automatically after a reboot, add the UUID identified in Step 3 to the `/etc/fstab` file:
++
+[source,text]
+----
+UUID=a1b2c3d4-e5f6-7890-abcd-1234567890ab /mnt/data xfs defaults 0 0
+----

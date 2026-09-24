@@ -1,0 +1,57 @@
+#  Understanding Physical Volumes (PVs)
+
+= Understanding Physical Volumes (PVs)
+
+In the Logical Volume Manager (LVM) architecture, the **Physical Volume (PV)** acts as the fundamental building block. Before LVM can manage storage, it must identify and label the underlying hardware to treat it as a flexible pool of data.
+
+== What is a Physical Volume?
+
+A Physical Volume is a storage device—or a partition on a storage device—that has been initialized for use by LVM. By converting a raw block device into a PV, you add an LVM metadata header to the disk. This header describes the device as part of the LVM subsystem, allowing the kernel and LVM tools to manage the storage beyond the limitations of standard disk partitions.
+
+=== Key Characteristics of PVs
+
+*   **Abstraction Layer:** PVs hide the physical geometry of the hard drive (or SAN LUN) from the file system.
+*   **Initialization:** Before a device can be used as a PV, it must be initialized using the `pvcreate` command. This process writes an LVM label to the start of the device.
+*   **Flexibility:** Once a device is a PV, it can be assigned to a Volume Group (VG). Because LVM works with the space provided by the PV, you can easily resize, extend, or remove disks from your storage topology without unmounting file systems or repartitioning the hardware.
+
+=== Physical Volumes and the Storage Stack
+
+In a typical RHEL environment—such as those used for high-performance workloads like SAP HANA—the storage hierarchy is organized as follows:
+
+1.  **Physical Device (e.g., `/dev/sdb`):** The raw hardware device.
+2.  **Physical Volume (PV):** The device after initialization (`pvcreate /dev/sdb`).
+3.  **Volume Group (VG):** A collection of one or more PVs acting as a single storage pool.
+4.  **Logical Volume (LV):** A virtual partition carved out of the VG, formatted with a file system (e.g., XFS), and mounted to the directory tree.
+
+== Managing PVs in RHEL
+
+While the `rhel_system_roles.storage` role automates these tasks in production environments, understanding the underlying commands is critical for troubleshooting and manual configuration.
+
+=== Creating a Physical Volume
+
+To initialize a block device for LVM use, execute the following command:
+
+[source,bash]
+----
+[root@localhost ~]# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created.
+----
+
+=== Verifying Physical Volumes
+
+To inspect existing PVs on your system and verify their status, metadata, and available capacity, use the `pvs` or `pvdisplay` commands:
+
+[source,bash]
+----
+[root@localhost ~]# pvs
+  PV         VG   Fmt  Attr PSize   PFree
+  /dev/sdb   sap  lvm2 a--  <50.00g <10.00g
+----
+
+*   **PV:** The device name.
+*   **VG:** The Volume Group to which the PV currently belongs.
+*   **PSize:** The total size of the physical device available to LVM.
+*   **PFree:** The amount of unallocated space remaining on that specific PV.
+
+=== Practical Implications for SAP HANA
+In the context of SAP HANA, where performance-critical volumes like `/hana/data` and `/hana/log` are required, LVM allows you to aggregate multiple fast NVMe or SSD drives into a single Volume Group. By creating multiple Physical Volumes from these high-speed devices, you can create large, performant Logical Volumes that meet the specific capacity requirements outlined in your SAP sizing documentation.

@@ -1,6 +1,6 @@
 site:
-  title: FIXME Course Title
-  start_page: REPLACEREPONAME::index.adoc
+  title:  LVM on RHEL
+  start_page: rcb-test-25sep::index.adoc
 
 antora:
   extensions:
