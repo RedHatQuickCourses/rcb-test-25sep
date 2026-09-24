@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Provisioning and formatting block devices :: LVM on RHEL</title>
+    <link rel="prev" href="hands-on-lab.html">
+    <link rel="next" href="automating-storage-configuration-using-ansible-roles.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">LVM on RHEL</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rcb-test-25sep" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">LVM on RHEL</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../introduction-to-lvm-components/introduction-to-lvm-components.html">Introduction to LVM Components</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../introduction-to-lvm-components/understanding-physical-volumes-pvs.html">Understanding Physical Volumes (PVs)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../introduction-to-lvm-components/defining-volume-groups-vgs.html">Defining Volume Groups (VGs)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../managing-storage-with-system-roles/managing-storage-with-system-roles.html">Managing Storage with System Roles</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/overview-of-rhel_system_rolesstorage.html">Overview of rhel_system_roles.storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/configuring-storage-pools-and-volumes.html">Configuring storage pools and volumes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="hands-on-lab.html">Hands-on Lab</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="provisioning-and-formatting-block-devices.html">Provisioning and formatting block devices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="automating-storage-configuration-using-ansible-roles.html">Automating storage configuration using Ansible roles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">LVM on RHEL</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">LVM on RHEL</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">LVM on RHEL</a></li>
+    <li><a href="hands-on-lab.html">Hands-on Lab</a></li>
+    <li><a href="provisioning-and-formatting-block-devices.html">Provisioning and formatting block devices</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Provisioning and formatting block devices</h1>
+<h1 id="_provisioning_and_formatting_block_devices" class="sect0"><a class="anchor" href="#_provisioning_and_formatting_block_devices"></a>Provisioning and Formatting Block Devices</h1>
+<div class="paragraph">
+<p>In Red Hat Enterprise Linux (RHEL), block device management is the foundation of system storage. Before a raw disk—such as a virtual <code>vdb</code> or an unpartitioned physical drive—can be used to store data, it must be properly initialized and prepared for a filesystem.</p>
+</div>
+<div class="sect1">
+<h2 id="_understanding_block_device_preparation"><a class="anchor" href="#_understanding_block_device_preparation"></a>Understanding Block Device Preparation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Provisioning a new block device typically follows a standard sequence:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Identification:</strong> Locating the raw device (e.g., <code>/dev/vdb</code>) using tools like <code>lsblk</code>.</p>
+</li>
+<li>
+<p><strong>Partitioning (Optional):</strong> Creating partitions if specific sub-divisions of the disk are required.</p>
+</li>
+<li>
+<p><strong>Formatting (Creation of Filesystem):</strong> Placing a filesystem structure (such as XFS or ext4) onto the block device or partition so the OS can organize files.</p>
+</li>
+<li>
+<p><strong>Mounting:</strong> Attaching the formatted device to the directory tree.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Before performing any operations on a disk, always verify the device name using <code>lsblk</code> to avoid data loss on existing system drives.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_provisioning_and_formatting"><a class="anchor" href="#_hands_on_lab_provisioning_and_formatting"></a>Hands-on Lab: Provisioning and Formatting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise, we will take a raw 50GB disk (<code>/dev/vdb</code>) and prepare it for use.</p>
+</div>
+<div class="sect2">
+<h3 id="_step_1_identify_the_disk"><a class="anchor" href="#_step_1_identify_the_disk"></a>Step 1: Identify the Disk</h3>
+<div class="paragraph">
+<p>First, verify the presence of the unformatted disk. As seen in the system context, your environment may show a raw device without a mount point:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[student@localhost ~]$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+vda    252:0    0   200G  0 disk
+├─vda1 252:1    0     1M  0 part
+├─vda2 252:2    0   100M  0 part /boot/efi
+└─vda3 252:3    0 199,9G  0 part /
+vdb    252:16   0    50G  0 disk</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_create_a_filesystem"><a class="anchor" href="#_step_2_create_a_filesystem"></a>Step 2: Create a Filesystem</h3>
+<div class="paragraph">
+<p>For most modern RHEL deployments, XFS is the recommended filesystem due to its performance and scalability. We can format the raw block device directly without creating a partition table if the entire disk will be used as a single volume.</p>
+</div>
+<div class="paragraph">
+<p>Run the following command to format <code>/dev/vdb</code> with the XFS filesystem:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# mkfs.xfs /dev/vdb</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_verify_the_new_filesystem"><a class="anchor" href="#_step_3_verify_the_new_filesystem"></a>Step 3: Verify the New Filesystem</h3>
+<div class="paragraph">
+<p>Once the formatting process completes, verify that the device is ready by checking the file system type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# blkid /dev/vdb
+/dev/vdb: UUID="a1b2c3d4-e5f6-7890-abcd-1234567890ab" BLOCK_SIZE="4096" TYPE="xfs"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_mount_the_device"><a class="anchor" href="#_step_4_mount_the_device"></a>Step 4: Mount the Device</h3>
+<div class="paragraph">
+<p>To use the storage, create a mount point and attach the device:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# mkdir -p /mnt/data
+[root@localhost ~]# mount /dev/vdb /mnt/data
+[root@localhost ~]# df -h /mnt/data
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vdb         50G  400M   50G   1% /mnt/data</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_guidance"><a class="anchor" href="#_troubleshooting_guidance"></a>Troubleshooting Guidance</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Device Busy:</strong> If you cannot format a device, ensure no processes are accessing it and that it is not currently mounted (<code>umount /dev/vdb</code>).</p>
+</li>
+<li>
+<p><strong>Persistent Mounts:</strong> The <code>mount</code> command is temporary. To ensure the disk mounts automatically after a reboot, add the UUID identified in Step 3 to the <code>/etc/fstab</code> file:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">UUID=a1b2c3d4-e5f6-7890-abcd-1234567890ab /mnt/data xfs defaults 0 0</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hands-on-lab.html">Hands-on Lab</a></span>
+  <span class="next"><a href="automating-storage-configuration-using-ansible-roles.html">Automating storage configuration using Ansible roles</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

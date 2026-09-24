@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Understanding Physical Volumes (PVs) :: LVM on RHEL</title>
+    <link rel="prev" href="introduction-to-lvm-components.html">
+    <link rel="next" href="defining-volume-groups-vgs.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">LVM on RHEL</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rcb-test-25sep" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">LVM on RHEL</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="introduction-to-lvm-components.html">Introduction to LVM Components</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="understanding-physical-volumes-pvs.html">Understanding Physical Volumes (PVs)</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="defining-volume-groups-vgs.html">Defining Volume Groups (VGs)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../managing-storage-with-system-roles/managing-storage-with-system-roles.html">Managing Storage with System Roles</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/overview-of-rhel_system_rolesstorage.html">Overview of rhel_system_roles.storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/configuring-storage-pools-and-volumes.html">Configuring storage pools and volumes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hands-on-lab/hands-on-lab.html">Hands-on Lab</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hands-on-lab/provisioning-and-formatting-block-devices.html">Provisioning and formatting block devices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hands-on-lab/automating-storage-configuration-using-ansible-roles.html">Automating storage configuration using Ansible roles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">LVM on RHEL</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">LVM on RHEL</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">LVM on RHEL</a></li>
+    <li><a href="introduction-to-lvm-components.html">Introduction to LVM Components</a></li>
+    <li><a href="understanding-physical-volumes-pvs.html">Understanding Physical Volumes (PVs)</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Understanding Physical Volumes (PVs)</h1>
+<h1 id="_understanding_physical_volumes_pvs" class="sect0"><a class="anchor" href="#_understanding_physical_volumes_pvs"></a>Understanding Physical Volumes (PVs)</h1>
+<div class="paragraph">
+<p>In the Logical Volume Manager (LVM) architecture, the <strong>Physical Volume (PV)</strong> acts as the fundamental building block. Before LVM can manage storage, it must identify and label the underlying hardware to treat it as a flexible pool of data.</p>
+</div>
+<div class="sect1">
+<h2 id="_what_is_a_physical_volume"><a class="anchor" href="#_what_is_a_physical_volume"></a>What is a Physical Volume?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Physical Volume is a storage device—or a partition on a storage device—that has been initialized for use by LVM. By converting a raw block device into a PV, you add an LVM metadata header to the disk. This header describes the device as part of the LVM subsystem, allowing the kernel and LVM tools to manage the storage beyond the limitations of standard disk partitions.</p>
+</div>
+<div class="sect2">
+<h3 id="_key_characteristics_of_pvs"><a class="anchor" href="#_key_characteristics_of_pvs"></a>Key Characteristics of PVs</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Abstraction Layer:</strong> PVs hide the physical geometry of the hard drive (or SAN LUN) from the file system.</p>
+</li>
+<li>
+<p><strong>Initialization:</strong> Before a device can be used as a PV, it must be initialized using the <code>pvcreate</code> command. This process writes an LVM label to the start of the device.</p>
+</li>
+<li>
+<p><strong>Flexibility:</strong> Once a device is a PV, it can be assigned to a Volume Group (VG). Because LVM works with the space provided by the PV, you can easily resize, extend, or remove disks from your storage topology without unmounting file systems or repartitioning the hardware.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_physical_volumes_and_the_storage_stack"><a class="anchor" href="#_physical_volumes_and_the_storage_stack"></a>Physical Volumes and the Storage Stack</h3>
+<div class="paragraph">
+<p>In a typical RHEL environment—such as those used for high-performance workloads like SAP HANA—the storage hierarchy is organized as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Physical Device (e.g., <code>/dev/sdb</code>):</strong> The raw hardware device.</p>
+</li>
+<li>
+<p><strong>Physical Volume (PV):</strong> The device after initialization (<code>pvcreate /dev/sdb</code>).</p>
+</li>
+<li>
+<p><strong>Volume Group (VG):</strong> A collection of one or more PVs acting as a single storage pool.</p>
+</li>
+<li>
+<p><strong>Logical Volume (LV):</strong> A virtual partition carved out of the VG, formatted with a file system (e.g., XFS), and mounted to the directory tree.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_managing_pvs_in_rhel"><a class="anchor" href="#_managing_pvs_in_rhel"></a>Managing PVs in RHEL</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>While the <code>rhel_system_roles.storage</code> role automates these tasks in production environments, understanding the underlying commands is critical for troubleshooting and manual configuration.</p>
+</div>
+<div class="sect2">
+<h3 id="_creating_a_physical_volume"><a class="anchor" href="#_creating_a_physical_volume"></a>Creating a Physical Volume</h3>
+<div class="paragraph">
+<p>To initialize a block device for LVM use, execute the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# pvcreate /dev/sdb
+  Physical volume "/dev/sdb" successfully created.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_verifying_physical_volumes"><a class="anchor" href="#_verifying_physical_volumes"></a>Verifying Physical Volumes</h3>
+<div class="paragraph">
+<p>To inspect existing PVs on your system and verify their status, metadata, and available capacity, use the <code>pvs</code> or <code>pvdisplay</code> commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# pvs
+  PV         VG   Fmt  Attr PSize   PFree
+  /dev/sdb   sap  lvm2 a--  &lt;50.00g &lt;10.00g</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>PV:</strong> The device name.</p>
+</li>
+<li>
+<p><strong>VG:</strong> The Volume Group to which the PV currently belongs.</p>
+</li>
+<li>
+<p><strong>PSize:</strong> The total size of the physical device available to LVM.</p>
+</li>
+<li>
+<p><strong>PFree:</strong> The amount of unallocated space remaining on that specific PV.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_practical_implications_for_sap_hana"><a class="anchor" href="#_practical_implications_for_sap_hana"></a>Practical Implications for SAP HANA</h3>
+<div class="paragraph">
+<p>In the context of SAP HANA, where performance-critical volumes like <code>/hana/data</code> and <code>/hana/log</code> are required, LVM allows you to aggregate multiple fast NVMe or SSD drives into a single Volume Group. By creating multiple Physical Volumes from these high-speed devices, you can create large, performant Logical Volumes that meet the specific capacity requirements outlined in your SAP sizing documentation.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="introduction-to-lvm-components.html">Introduction to LVM Components</a></span>
+  <span class="next"><a href="defining-volume-groups-vgs.html">Defining Volume Groups (VGs)</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

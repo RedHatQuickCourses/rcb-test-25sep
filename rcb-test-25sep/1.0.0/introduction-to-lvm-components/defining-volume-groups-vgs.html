@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Defining Volume Groups (VGs) :: LVM on RHEL</title>
+    <link rel="prev" href="understanding-physical-volumes-pvs.html">
+    <link rel="next" href="../managing-storage-with-system-roles/managing-storage-with-system-roles.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">LVM on RHEL</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="rcb-test-25sep" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">LVM on RHEL</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="introduction-to-lvm-components.html">Introduction to LVM Components</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="understanding-physical-volumes-pvs.html">Understanding Physical Volumes (PVs)</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="defining-volume-groups-vgs.html">Defining Volume Groups (VGs)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../managing-storage-with-system-roles/managing-storage-with-system-roles.html">Managing Storage with System Roles</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/overview-of-rhel_system_rolesstorage.html">Overview of rhel_system_roles.storage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../managing-storage-with-system-roles/configuring-storage-pools-and-volumes.html">Configuring storage pools and volumes</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../hands-on-lab/hands-on-lab.html">Hands-on Lab</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hands-on-lab/provisioning-and-formatting-block-devices.html">Provisioning and formatting block devices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hands-on-lab/automating-storage-configuration-using-ansible-roles.html">Automating storage configuration using Ansible roles</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">LVM on RHEL</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">LVM on RHEL</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">LVM on RHEL</a></li>
+    <li><a href="introduction-to-lvm-components.html">Introduction to LVM Components</a></li>
+    <li><a href="defining-volume-groups-vgs.html">Defining Volume Groups (VGs)</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Defining Volume Groups (VGs)</h1>
+<h1 id="_defining_volume_groups_vgs" class="sect0"><a class="anchor" href="#_defining_volume_groups_vgs"></a>Defining Volume Groups (VGs)</h1>
+<div class="paragraph">
+<p>In the Logical Volume Manager (LVM) architecture, a <strong>Volume Group (VG)</strong> acts as the central storage pool. It is the abstraction layer that collects one or more Physical Volumes (PVs) and combines them into a single, unified storage entity.</p>
+</div>
+<div class="sect1">
+<h2 id="_what_is_a_volume_group"><a class="anchor" href="#_what_is_a_volume_group"></a>What is a Volume Group?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A Volume Group is the container that sits between the physical storage hardware and the logical volumes (LVs) used by the operating system. By grouping multiple physical disks or partitions together, LVM provides a flexible way to manage space that is no longer restricted by the physical size of an individual disk.</p>
+</div>
+<div class="paragraph">
+<p>Key characteristics of VGs include:
+* <strong>Storage Pooling:</strong> Multiple PVs of varying sizes can be joined into one VG.
+* <strong>Elasticity:</strong> You can expand a VG at any time by adding new Physical Volumes to it without needing to migrate existing data.
+* <strong>Abstracted Space:</strong> Once the VG is created, space is carved out of the pool to create Logical Volumes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_creating_a_volume_group"><a class="anchor" href="#_creating_a_volume_group"></a>Creating a Volume Group</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create a Volume Group, you use the <code>vgcreate</code> command. This command takes a name for the new VG and a list of Physical Volumes that will contribute their storage to the pool.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Syntax: vgcreate [vg_name] [pv_path1] [pv_path2]...
+[root@localhost ~]# vgcreate vg_data /dev/sdb1 /dev/sdc1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the two partitions, <code>/dev/sdb1</code> and <code>/dev/sdc1</code>, are initialized as PVs and combined into a single Volume Group named <code>vg_data</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_physical_extents_pes"><a class="anchor" href="#_physical_extents_pes"></a>Physical Extents (PEs)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When a VG is created, LVM divides the total available space into fixed-size chunks called <strong>Physical Extents (PEs)</strong>.
+* All PEs within a single Volume Group are the same size (the default is usually 4MB).
+* When you create a Logical Volume, LVM allocates these extents to the LV.
+* Because the VG is essentially a collection of PEs, LVM can spread a single Logical Volume across multiple physical disks seamlessly.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_inspecting_volume_groups"><a class="anchor" href="#_inspecting_volume_groups"></a>Inspecting Volume Groups</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To verify the status and capacity of your Volume Groups, use the <code>vgs</code> and <code>vgdisplay</code> commands.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>vgs</code>:</strong> Provides a concise, one-line summary of all VGs on the system.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# vgs
+  VG      #PV #LV #SN Attr   VSize   VFree
+  rhel      1   2   0 wz--n- &lt;11.00g    0
+  vg_data   2   0   0 wz--n-  19.99g 19.99g</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong><code>vgdisplay</code>:</strong> Provides detailed information about a specific VG, including the PE size, the number of free extents, and the physical volumes associated with the group.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# vgdisplay vg_data
+  --- Volume group ---
+  VG Name               vg_data
+  System ID
+  Format                lvm2
+  Metadata Areas        2
+  VG Size               19.99 GiB
+  PE Size               4.00 MiB
+  Total PE              5118
+  Alloc PE / Size       0 / 0
+  Free  PE / Size       5118 / 19.99 GiB</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_extending_a_volume_group"><a class="anchor" href="#_extending_a_volume_group"></a>Extending a Volume Group</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>One of the primary benefits of using LVM is the ability to grow the VG size online. If you add a new physical disk to your server, you can add it to an existing VG using the <code>vgextend</code> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@localhost ~]# vgextend vg_data /dev/sdd1
+  Volume group "vg_data" successfully extended</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This immediately increases the <code>VFree</code> (Free Space) of the <code>vg_data</code> group, allowing you to create or resize Logical Volumes without unmounting or restarting the system.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="understanding-physical-volumes-pvs.html">Understanding Physical Volumes (PVs)</a></span>
+  <span class="next"><a href="../managing-storage-with-system-roles/managing-storage-with-system-roles.html">Managing Storage with System Roles</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

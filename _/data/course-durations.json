@@ -1,11 +1,11 @@
 {
-  "totalSeconds": 4009,
-  "pageCount": 15,
+  "totalSeconds": 752,
+  "pageCount": 12,
   "pages": [
     {
       "module": "ROOT",
       "page": "index.adoc",
-      "seconds": 26
+      "seconds": 24
     },
     {
       "module": "LABENV",
@@ -13,64 +13,49 @@
       "seconds": 4
     },
     {
-      "module": "chapter1",
-      "page": "index.adoc",
-      "seconds": 9
+      "module": "introduction-to-lvm-components",
+      "page": "introduction-to-lvm-components.adoc",
+      "seconds": 24
     },
     {
-      "module": "chapter1",
-      "page": "section1.adoc",
-      "seconds": 3009
+      "module": "introduction-to-lvm-components",
+      "page": "understanding-physical-volumes-pvs.adoc",
+      "seconds": 128
     },
     {
-      "module": "chapter1",
-      "page": "section2.adoc",
-      "seconds": 9
+      "module": "introduction-to-lvm-components",
+      "page": "defining-volume-groups-vgs.adoc",
+      "seconds": 89
     },
     {
-      "module": "chapter1",
-      "page": "section3.adoc",
-      "seconds": 9
+      "module": "managing-storage-with-system-roles",
+      "page": "managing-storage-with-system-roles.adoc",
+      "seconds": 37
     },
     {
-      "module": "chapter1",
-      "page": "tabs-demo.adoc",
-      "seconds": 20
+      "module": "managing-storage-with-system-roles",
+      "page": "overview-of-rhel_system_rolesstorage.adoc",
+      "seconds": 130
     },
     {
-      "module": "chapter1",
-      "page": "collapsible-demo.adoc",
-      "seconds": 36
+      "module": "managing-storage-with-system-roles",
+      "page": "configuring-storage-pools-and-volumes.adoc",
+      "seconds": 109
     },
     {
-      "module": "chapter1",
-      "page": "images.adoc",
-      "seconds": 841
+      "module": "hands-on-lab",
+      "page": "hands-on-lab.adoc",
+      "seconds": 21
     },
     {
-      "module": "chapter2",
-      "page": "index.adoc",
-      "seconds": 9
+      "module": "hands-on-lab",
+      "page": "provisioning-and-formatting-block-devices.adoc",
+      "seconds": 90
     },
     {
-      "module": "chapter2",
-      "page": "section1.adoc",
-      "seconds": 9
-    },
-    {
-      "module": "chapter3",
-      "page": "index.adoc",
-      "seconds": 9
-    },
-    {
-      "module": "chapter3",
-      "page": "section1.adoc",
-      "seconds": 9
-    },
-    {
-      "module": "chapter3",
-      "page": "section2.adoc",
-      "seconds": 9
+      "module": "hands-on-lab",
+      "page": "automating-storage-configuration-using-ansible-roles.adoc",
+      "seconds": 95
     },
     {
       "module": "appendix",
