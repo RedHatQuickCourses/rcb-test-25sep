@@ -1,0 +1,1 @@
+To get started with the hands-on portion of this training, you will need to access your lab environment. Please follow the provided instructions to log in and prepare your workstation for the upcoming exercises. If you encounter any issues during the setup process, be sure to consult the support documentation for further assistance.

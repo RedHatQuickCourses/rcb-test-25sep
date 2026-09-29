@@ -1,0 +1,17 @@
+In the Logical Volume Manager architecture, a Volume Group, or VG, serves as your central storage pool. It acts as an abstraction layer that collects one or more Physical Volumes and combines them into a single, unified storage entity.
+
+Let’s look at what a Volume Group actually does. It serves as the container between your physical storage hardware and the Logical Volumes used by the operating system. By grouping multiple physical disks or partitions together, LVM gives you a flexible way to manage space that is no longer restricted by the physical size of an individual disk.
+
+There are three key characteristics to keep in mind regarding Volume Groups. First, they allow for storage pooling, where multiple Physical Volumes of varying sizes can be joined into one group. Second, they provide elasticity; you can expand a Volume Group at any time by adding new physical volumes without needing to migrate your existing data. Finally, they provide abstracted space. Once the Volume Group is created, you can carve out space from that shared pool to create your Logical Volumes.
+
+To create a Volume Group, you use the `vgcreate` command. This command requires you to specify a name for the new group followed by a list of the Physical Volumes that will contribute their storage to the pool. For example, if you run `vgcreate vg_data /dev/sdb1 /dev/sdc1`, you are initializing the two partitions, `/dev/sdb1` and `/dev/sdc1`, and combining them into a single Volume Group named `vg_data`.
+
+When you create a Volume Group, LVM divides the total available space into fixed-size chunks called Physical Extents, or PEs. It is important to remember that all Physical Extents within a single Volume Group are the same size, with the default typically being 4 megabytes. When you create a Logical Volume, LVM allocates these extents to it. Because the Volume Group is essentially a collection of these extents, LVM can seamlessly spread a single Logical Volume across multiple physical disks.
+
+To verify the status and capacity of your Volume Groups, you can use two primary commands: `vgs` and `vgdisplay`.
+
+Use the `vgs` command for a concise, one-line summary of all Volume Groups on your system. This will show you the volume group name, the number of physical and logical volumes, and the total versus free size.
+
+If you need more detail, use the `vgdisplay` command followed by the name of the group. This provides a comprehensive overview, including the Physical Extent size, the number of free extents, and the specific physical volumes associated with that group.
+
+One of the greatest benefits of using LVM is the ability to grow your Volume Group size online. If you add a new physical disk to your server, you can add it to an existing group by using the `vgextend` command. For instance, running `vgextend vg_data /dev/sdd1` will immediately increase the free space available in the `vg_data` group. This allows you to create or resize Logical Volumes without needing to unmount your storage or restart your system.

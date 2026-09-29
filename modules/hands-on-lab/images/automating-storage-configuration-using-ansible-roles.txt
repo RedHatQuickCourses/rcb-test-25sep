@@ -1,0 +1,25 @@
+In enterprise environments, manually configuring Logical Volume Manager, or LVM, components across multiple nodes is often inefficient and prone to error. To address this, the `rhel-system-roles` collection provides a powerful tool known as the `storage` role. This role offers a standardized, idempotent way to manage physical volumes, volume groups, and logical volumes across your infrastructure.
+
+Let’s look at the overview of the `rhel_system_roles.storage` role. This role simplifies the complexity of block device management by allowing you to define your desired storage state using YAML variables, rather than forcing you to write individual shell commands. By using this role, you can provision physical devices into volume groups, create logical volumes with specific sizing and file system types, and even configure volumes to mount automatically by defining the required mount points and options.
+
+To work effectively with this role, you should be familiar with three core concepts:
+First, "disks," which are your raw physical block devices.
+Second, "volume groups," which act as a pool of storage created from one or more physical volumes.
+And third, "logical volumes," which are the usable storage partitions carved out from that volume group space.
+
+Now, let's move on to a hands-on lab where we will automate an LVM configuration using an Ansible playbook.
+
+Before you begin, ensure you have the `rhel-system-roles` collection installed on your control node. You can do this by running the command: `ansible-galaxy collection install redhat.rhel_system_roles`.
+
+The first step is to define your storage variables. Create a file named `storage_vars.yml`. Inside this file, you will define the desired state of your storage. For example, you might specify a volume group named `my_vg` using disks `/dev/sdb` and `/dev/sdc`, and then define a logical volume named `data_lv` with a size of 10 gigabytes, a mount point at `/mnt/data`, and an XFS file system type.
+
+In step two, create the playbook named `configure_storage.yml` to apply the role. In this file, you will point to your managed nodes, include the `storage_vars.yml` file you just created, and declare the `redhat.rhel_system_roles.storage` role.
+
+For step three, execute the playbook to provision the storage. Run the command: `ansible-playbook -i inventory configure_storage.yml`. Once executed, the role will automatically identify the disks, create the volume group, format the logical volume, and handle the mounting process for you.
+
+After the playbook finishes, you should verify the new LVM structure on your managed node. You can confirm the configuration by running `vgs` to check the volume group, `lvs` to check the logical volume, and `df -h` filtered by your mount point to ensure everything is mounted correctly.
+
+Before concluding, here are a few troubleshooting tips to keep in mind. 
+First, regarding device identification: ensure that device names like `/dev/sdb` are consistent across your environment. In production, it is highly recommended to use UUIDs or labels to prevent issues if device paths change. 
+Second, keep in mind the principle of idempotency. If the role fails, check if the disks are already in use or part of a different volume group; the role will report any conflicts that prevent the desired state from being reached. 
+Finally, check your dependencies. Make sure that the `lvm2` packages are available in your repositories, as the role relies on these binaries being present on the target system.
