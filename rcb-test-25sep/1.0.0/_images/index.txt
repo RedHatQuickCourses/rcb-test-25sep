@@ -1,0 +1,9 @@
+Welcome to this course on LVM on Red Hat Enterprise Linux.
+
+In this module, we will explore the core concepts of Logical Volume Management. We will begin with an introduction to LVM components, move on to managing storage using system roles, and finally, put your knowledge into practice with a hands-on lab.
+
+To get the most out of this training, it is assumed that you already have relevant prior experience. Please ensure you have completed any necessary prerequisite courses or have equivalent hands-on knowledge before proceeding.
+
+Before we begin, please note that this publication utilizes content assisted by artificial intelligence tools. It is important to know that all training deliverables have primarily human authorship, and all content has been reviewed by a human domain expert to ensure accuracy and quality.
+
+Let’s get started.

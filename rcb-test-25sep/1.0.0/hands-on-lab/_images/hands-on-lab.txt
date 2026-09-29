@@ -1,0 +1,5 @@
+In this hands-on lab, you will have the opportunity to apply your knowledge of LVM and storage management in a practical environment. 
+
+We will focus on three key areas of activity. First, you will work on provisioning, which involves creating and formatting block devices to prepare them for data storage. Second, you will practice automation by implementing the `rhel_system_roles.storage` role to configure storage pools and volumes using Ansible.
+
+Finally, you will manage your environment using the `lab` command-line utility. You will use this tool to start, grade, and finish your exercises, which ensures you maintain a clean and consistent state for every task you perform.

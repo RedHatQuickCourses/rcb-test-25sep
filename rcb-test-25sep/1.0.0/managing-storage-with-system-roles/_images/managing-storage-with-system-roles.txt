@@ -1,0 +1,11 @@
+Managing storage across your environment can be a complex task, but you can simplify it significantly by using the RHEL system roles storage role. This tool is designed to automate the configuration of storage devices on Red Hat Enterprise Linux, which ensures your setups remain consistent across all your environments. By abstracting the underlying management tasks, it makes the deployment of logical volumes and file systems much easier to handle.
+
+There are four key features you should know about.
+
+First, the role uses declarative configuration. This allows you to define your storage pools and volumes using YAML. Within these files, you can specify essential details like your disks, storage sizes, mount points, and the file system types you want to use, such as XFS.
+
+Second, the role provides powerful automation. It streamlines the entire process of provisioning and formatting block devices, which significantly reduces the manual effort required and helps prevent human error.
+
+Third, it is built with SAP readiness in mind. The role provides a standardized method to ensure you meet the specific storage requirements for SAP HANA, particularly for your data, log, and shared directories.
+
+Finally, the role includes important safety options. For instance, you can use the variable `storage_safe_mode` to control whether existing storage configurations should be preserved or overwritten during your deployment. Keep in mind that using these safety settings is an important step in preventing accidental data loss when applying new configurations.

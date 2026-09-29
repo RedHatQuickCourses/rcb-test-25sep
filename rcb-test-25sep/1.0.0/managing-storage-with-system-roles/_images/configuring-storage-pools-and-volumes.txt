@@ -1,0 +1,15 @@
+Configuring storage pools and volumes is a critical task in any system administration workflow. The `rhel_system_roles.storage` role provides a declarative approach to managing LVM storage. Instead of executing manual commands like `pvcreate`, `vgcreate`, and `lvcreate`, you define your desired storage state in an Ansible variable, allowing the system to handle the underlying LVM complexities for you.
+
+Let’s look at how to define storage pools. A storage pool acts as the abstraction layer for your physical storage. Within this role, a pool is essentially a Volume Group, or VG, backed by one or more Physical Volumes. When you define a pool, you specify the block devices, such as `sdb` or `sdc`, that contribute to the pool. The role then automatically initializes these devices as Physical Volumes, ensures the Volume Group is created, and includes those disks, providing a shared capacity for your logical volumes.
+
+Once your pool is established, you can define individual volumes within it. For each volume, you need to specify four key attributes: the size, such as 128 gigabytes; the mount point where the volume will be accessible; the file system type, such as `xfs` or `ext4`; and the state, which is typically set to `present` to ensure the volume exists on the system.
+
+It is very important to keep this in mind: when using the `rhel_system_roles.storage` role for initial system builds, consider setting the `storage_safe_mode` variable to `false`. This allows the role to overwrite existing configurations. While this is often necessary during fresh provisioning, it should be used with extreme caution on systems that already contain production data.
+
+To see how this works in practice, consider an example configuration. You can group multiple disks—for example, `sdb` through `sdf`—into a single pool named `sap`. Within that pool, you can carve out specific volumes to meet requirements for applications like SAP HANA. For instance, you might define a `data` volume, a `log` volume, and a `shared` volume, each with its own size and mount point, all formatted as `xfs`.
+
+As you implement these configurations, keep a few best practices in mind. First, always refer to your application's sizing guide, such as SAP HANA requirements, before defining your volumes. Remember that certain directories, like `/hana/log`, are typically calculated based on a percentage of system RAM. 
+
+Second, remember the benefit of automation. By utilizing this role in an Ansible Playbook, you ensure that your storage configuration is idempotent and reproducible across your entire infrastructure. 
+
+Finally, if your storage configuration involves shared storage for clustering, ensure that the underlying infrastructure is properly configured to prevent single points of failure, following the established Red Hat Enterprise Linux High Availability best practices.

@@ -1,0 +1,7 @@
+In this module, we will introduce the core components of Logical Volume Management, or LVM, in Red Hat Enterprise Linux. LVM provides a flexible approach to storage management by abstracting physical hardware into manageable logical units.
+
+To understand how LVM works, we need to look at two primary building blocks:
+
+First, we have Physical Volumes, or PVs. These are your underlying storage devices, such as raw disks or specific disk partitions, that have been initialized for use by the LVM system.
+
+Second, we have Volume Groups, or VGs. A Volume Group acts as a centralized storage pool, created by combining one or more Physical Volumes. Essentially, the Volume Group serves as the container from which you can allocate your logical volumes.

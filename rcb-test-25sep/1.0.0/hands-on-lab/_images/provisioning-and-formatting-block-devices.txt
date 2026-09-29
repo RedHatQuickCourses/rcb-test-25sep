@@ -1,0 +1,19 @@
+In Red Hat Enterprise Linux, managing block devices is the foundation of system storage. Before a raw disk, such as a virtual drive or an unpartitioned physical drive, can store data, it must be properly initialized and prepared with a filesystem.
+
+Provisioning a new block device typically follows a standard four-step sequence. First, you must identify the raw device using tools like `lsblk`. Second, you may optionally create partitions if you need specific sub-divisions of the disk. Third, you format the device by placing a filesystem—like XFS or ext4—onto it so the operating system can organize your files. Finally, you mount the device to attach it to the directory tree.
+
+Before we begin, a very important note: always verify the device name using `lsblk` before performing any operations on a disk. This prevents accidental data loss on existing system drives.
+
+Now, let's walk through a hands-on lab where we prepare a raw 50-gigabyte disk, `/dev/vdb`, for use.
+
+First, identify the disk. Run the `lsblk` command to verify the presence of the unformatted disk. In your output, you should see the raw device listed, for example, `/dev/vdb`, which will show no mount point or partitions.
+
+Next, we will create a filesystem. For most modern RHEL deployments, XFS is the recommended choice because of its performance and scalability. If you intend to use the entire disk as a single volume, you can format the raw block device directly without creating a partition table. To do this, run the command `mkfs.xfs /dev/vdb`.
+
+Once the formatting process is complete, verify that the device is ready by checking the file system type. Use the command `blkid /dev/vdb`. This will return the device's unique identifier, or UUID, and confirm that the type is set to XFS.
+
+Finally, we need to mount the device to make it usable. Start by creating a mount point directory using `mkdir -p /mnt/data`, then attach the device by running `mount /dev/vdb /mnt/data`. You can confirm the disk is successfully mounted by running `df -h /mnt/data`, which will display the disk size and its current mount location.
+
+A few tips for troubleshooting: if you encounter a "device busy" error while trying to format, ensure that no processes are accessing the disk and verify that it is not currently mounted; use the `umount` command if necessary. 
+
+Keep in mind that the `mount` command we just used is only temporary and will not persist after a reboot. To ensure the disk mounts automatically every time the system starts, you must add the UUID we identified earlier to the `/etc/fstab` file using the configuration format shown in the documentation.
