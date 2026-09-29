@@ -1,6 +1,8 @@
 #  Configuring storage pools and volumes
 
 = Configuring Storage Pools and Volumes
+:page-audio-src: configuring-storage-pools-and-volumes.wav
+:page-transcript-src: configuring-storage-pools-and-volumes.txt
 
 The `rhel_system_roles.storage` role provides a declarative approach to managing LVM storage. Instead of executing manual `pvcreate`, `vgcreate`, and `lvcreate` commands, you define the desired state in an Ansible variable, allowing the system to handle the underlying LVM complexities.
 

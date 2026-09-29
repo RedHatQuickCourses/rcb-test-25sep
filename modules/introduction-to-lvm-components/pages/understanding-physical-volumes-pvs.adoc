@@ -1,6 +1,8 @@
 #  Understanding Physical Volumes (PVs)
 
 = Understanding Physical Volumes (PVs)
+:page-audio-src: understanding-physical-volumes-pvs.wav
+:page-transcript-src: understanding-physical-volumes-pvs.txt
 
 In the Logical Volume Manager (LVM) architecture, the **Physical Volume (PV)** acts as the fundamental building block. Before LVM can manage storage, it must identify and label the underlying hardware to treat it as a flexible pool of data.
 

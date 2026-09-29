@@ -1,6 +1,8 @@
 #  Hands-on Lab
 
 = Hands-on Lab
+:page-audio-src: hands-on-lab.wav
+:page-transcript-src: hands-on-lab.txt
 
 The hands-on labs provide a practical environment to apply your knowledge of LVM and storage management. Key activities include:
 

@@ -1,6 +1,8 @@
 #  Overview of rhel_system_roles.storage
 
 = Overview of rhel_system_roles.storage
+:page-audio-src: overview-of-rhel_system_rolesstorage.wav
+:page-transcript-src: overview-of-rhel_system_rolesstorage.txt
 
 The `rhel_system_roles.storage` role is a powerful automation tool designed to abstract the complexities of storage management on Red Hat Enterprise Linux (RHEL). By leveraging Ansible, this role allows system administrators to define complex storage configurations—such as Logical Volume Management (LVM)—as code, ensuring consistency across deployments and reducing the potential for human error.
 

@@ -1,6 +1,8 @@
 #  Automating storage configuration using Ansible roles
 
 = Automating Storage Configuration with Ansible
+:page-audio-src: automating-storage-configuration-using-ansible-roles.wav
+:page-transcript-src: automating-storage-configuration-using-ansible-roles.txt
 
 In enterprise environments, manually configuring Logical Volume Manager (LVM) components across multiple nodes is error-prone and inefficient. The `rhel-system-roles` collection, specifically the `storage` role, provides a standardized, idempotent way to manage physical volumes, volume groups, and logical volumes.
 

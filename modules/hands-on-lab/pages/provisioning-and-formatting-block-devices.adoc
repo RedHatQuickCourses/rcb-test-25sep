@@ -1,6 +1,8 @@
 #  Provisioning and formatting block devices
 
 = Provisioning and Formatting Block Devices
+:page-audio-src: provisioning-and-formatting-block-devices.wav
+:page-transcript-src: provisioning-and-formatting-block-devices.txt
 
 In Red Hat Enterprise Linux (RHEL), block device management is the foundation of system storage. Before a raw disk—such as a virtual `vdb` or an unpartitioned physical drive—can be used to store data, it must be properly initialized and prepared for a filesystem.
 

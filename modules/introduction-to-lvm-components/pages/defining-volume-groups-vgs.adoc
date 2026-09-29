@@ -1,6 +1,8 @@
 #  Defining Volume Groups (VGs)
 
 = Defining Volume Groups (VGs)
+:page-audio-src: defining-volume-groups-vgs.wav
+:page-transcript-src: defining-volume-groups-vgs.txt
 
 In the Logical Volume Manager (LVM) architecture, a **Volume Group (VG)** acts as the central storage pool. It is the abstraction layer that collects one or more Physical Volumes (PVs) and combines them into a single, unified storage entity.
 
